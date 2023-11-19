@@ -30,33 +30,12 @@ form.addEventListener("submit", (e) => {
   let data = [{}];
   
   let acceptData = () => {
+    data.push({
+      nome: nomeInput.value,
+      banda: bandaInput.value,
+    });
   
-    document.addEventListener("submit", sendData);
-    function sendData(e) {
-      e.preventDefault();
-      const a = nomeInput.value;
-      const b = bandaInput.value;
-
-      fetch("http://localhost:8080/jpa/musicas", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Origin: "127.0.0.1:5500"        },
-        body: JSON.stringify({
-          nome: a,
-          banda: b
-        })
-      })
-        .then(res => res.json())
-        .then(data => {
-          const { id } = data;
-          document.querySelector(
-            ".id"
-          ).innerText = `The id is: ${id}`;
-        })
-        .catch(err => console.log(err));
-    }
+    localStorage.setItem("data", JSON.stringify(data));
   
     console.log(data);
     createMusicas();
